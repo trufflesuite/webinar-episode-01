@@ -15,4 +15,17 @@ contract("SimpleStorage", function (accounts) {
       assert.equal(storedData, 0, `Initial state should be zero`);
     });
   });
+  describe("Functionality", () => {
+    it("should store the value 42", async () => {
+      // get subject
+      const ssInstance = await SimpleStorage.deployed();
+
+      // change the subject
+      await ssInstance.setStoredData(42, { from: accounts[0] });
+
+      // verify we changed the subject
+      const storedData = await ssInstance.getStoredData.call();
+      assert.equal(storedData, 42, `${storedData} was not stored!`);
+    });
+  });
 });
