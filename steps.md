@@ -1,10 +1,13 @@
 # Project initialization
 
-  - [ ] First [install Truffle. See documentation here](https://www.trufflesuite.com/docs/truffle/getting-started/installation).
-  - [ ] Create a new folder and invoke the `truffle init` command
+  - [ ] First [install Truffle. See documentation here](https://www.trufflesuite.com/docs/truffle/getting-started/installation)
+  - [ ] Create a workplace for this project
+
+> The following set of commands initializes a truffle project in the $HOME/tut directory.
 
 ```sh
-$ mkdir tut && cd $_
+$ cd   # navigate to $HOME folder
+$ mkdir tut && cd $_   # make a tut folder and navigate into it.
 $ truffle init
 ```
 
@@ -25,8 +28,7 @@ Init successful, sweet!
 
 <hr />
 
-Truffle built out the following a few files that we don't have to worry about
-in this episode. We'll get to them in subsequent episodes.
+We now have the basic ingredients for a Truffle project.
 
 File                                                          | description
 --------------------------------------------------------------| ----------------------------
@@ -35,10 +37,9 @@ File                                                          | description
 [truffle-config.js](./truffle-config.js)                      | Truffle's configuration file
 
 
-Lets test that the system is ok. truffle test!
+Run `truffle test` to check the system.
 
-> `truffle test` runs all tests located in the test subdirectory of the project
-> root.
+> `truffle test` will execute all the test we specified and report the results.
 
 ```sh
 $ truffle test
@@ -54,33 +55,31 @@ Compiling your contracts...
 
 </details>
 
-### Status
+> As we have not written any tests there's not much to report.
 
-We have a Truffle project that we can add features to.
-  - [x] Project created
 
 # Introduce our features
 
-We want to write a Smart Contract that stores a value that can be retrieve. To
+Our goal is to write a Smart Contract that stores a value that can be retrieve. To
 do this we need to have the following.
   - [ ] a smart contract, `SimpleStorage`
   - [ ] some way to define the behavior of `SimpleStorage`
   - [ ] the ability to verify `SimpleStorage` behaves the way we defined
 
 We will use aspects of Behavior driven development(BDD), and Test driven
-development (TDD) methodologies to work out way through this tutorial. We will
-define new behavior/features by introducing a Truffle test and use it as a
-starting point to implement the feature.
+development (TDD) methodologies to work through this tutorial. We will define
+new behavior in truffle test files and implement contract logic to achieve that
+behavior.
 
-This approach will give us an opportunity to examine out system in small
-testable pieces to build up our knowledge and intuition of Truffle, Solidity
-and the ecosystem.
+This approach allows us to examine our system in small testable pieces while
+also increasing our knowledge and intuition of Truffle, Solidity and the
+ecosystem.
 
 
 ## Behaviors
 
-Let's create the SimpleStorage test-file, invoke truffle test, and examine the output.
-
+Let's create the truffle test-file for SimpleStorage, invoke truffle test, and
+examine the output.
 
 > `truffle create test <ContractName>` is a quick way to scaffold a test!  This
 > is where we define the behavior of a contract
@@ -125,24 +124,24 @@ Truffle v5.1.43 (core: 5.1.43)
 </details>
 
 
-The prominent error, below, is a clue to what's going on.
+The prominent error below reveals SimpleStorage is missing in action!
 
 ``` sh
 Error: Could not find artifacts for SimpleStorage from any sources
 ```
 
 Truffle test mocks! It compiles and deploys the contracts we write to a local
-test blockchain every time we run `truffle test`.  Our only test is trying to
-get a deployed `SimpleStorage` and fails because we have not yet introduced
-this contract to our project.
+test blockchain every time we run `truffle test`.  Our only behavior, the
+expectation that `SimpleStorage` is deployed, fails because we have not yet
+introduced this contract to our project.
 
-> [Be sure to study the test code before proceeding](./test/simple_storage.js).
+> :exclamation: [Be sure to study the test code before proceeding](./test/simple_storage.js).
 
 
 ## SimpleStorage Contract
 
-Now that we've defined the behavior of the SimpleStorage contract we want to
-write.  Let's create it and run `truffle test`
+Now that we've defined some behavior of the SimpleStorage contract we want to
+write.  Let's introduce it to our project and rerun the test.
 
 > `truffle create contract <ContractName>` is a quick way to scaffold a project!
 
@@ -194,24 +193,25 @@ deployed to a network. Here's what `truffle test` does at a high level.
   - calls all the tests in the system and displays the results
 
 This is an incredibly useful feature Truffle does for us.  As Smart contract
-developers, for the most part, to implement our contract logic and not have to
-wrestle with complicated testchain business.
+developers, for the most part, we want to focus on implementing our contract
+logic and not have to wrestle with complicated testchain business.
 
-Recall that Truffle scaffolded a migration script `1_initial_migration`. Review it
-to see how it deploys a Contract.
-
+> :exclamation: Recall that Truffle scaffolded an initial migration script.
+> [Review it to see how it deploys a Contract](./migrations/1_initial_migration.js)
 
 ## Migration SimpleStorage
 
-When truffle runs, it will execute all the deployments scripts in order lexical
-order. In order to get our SimpleStorage contract deployed (migrated) we have
-to create a deployment script for it.
+Truffle test will execute all the deployment scripts in lexical order. To
+deploy our SimpleStorage contract we will write a migration script.
 
-Create the the SimpleStorage deployment. Call it
-`migrations/2_deploy_simple_storage.js` and then execute another test
+> a deployment script is the place to define a Smart Contract's deployment
+> logic. These scripts are processed in lexical order which explains their odd
+> filenames.
+
+Create the the SimpleStorage deployment `migrations/2_deploy_simple_storage.js`
+and then execute another test
 
 ``` Solidity
-// migrations/2_deploy_simple_storage.js
 const SimpleStorage = artifacts.require("SimpleStorage");
 
 module.exports = function(deployer) {
@@ -252,7 +252,7 @@ Contratulations! If you see a similar output then you have:
   - [x] a way to define the behavior of `SimpleStorage`
   - [x] a way to validate its behavior is correct
 
-# Behavior: Our business logic.
+# Behavior: Our business logic
 
 The SimpleStorage contract should have:
   - [ ] a state, `storedData`. This is the location to store an integer value
@@ -261,7 +261,7 @@ The SimpleStorage contract should have:
   - [ ] a function `setStoredData`, to set the `storedData` value.
 
 
-## definition: storedData initial deployment value
+## define initial deployment value of storedData
 
 Add the following code to the test file and execute truffle test.
 
@@ -287,11 +287,13 @@ contract("SimpleStorage", (/* accounts */) => {
 
 ## test: watch it fail
 
-Since we just defined the behavior we expect the test to fail. Lets see how the system reports this expected failure.
+Since we defined a new behavior we expect the test to fail. Lets see how the
+system reports this expected failure.
 
-> This is a great way to learn about new systems. I expect the test to fail and
-> want to learn exactly how the system reports the error. This will help build
-> my intuition abou the system
+> :exclamation: This is a great way to learn about new systems. We expect the
+> test to fail and examining how the system reports the error will help build
+> our intuition about the system.
+>
 
 ``` sh
 $ truffle test
@@ -339,8 +341,12 @@ a look at the file and try to deduce what's happening.
       at Context.it (test/simple_storage.js:14:57)
 ```
 
-> This type of error will be a common occurence and it's good to start building
-> your intuition about them
+> :exclamation: This type of error will be a common occurence and it's good to
+> start building our intuition about them.
+>
+> In the test file we ask truffle for SimpleStorage's deployed instance and
+> then try to invoke a method on that instance. We have yet to define an API
+> for SimpleStorage
 
 
 ## implement getStoredData
@@ -360,7 +366,11 @@ contract SimpleStorage {
 }
 ```
 
-## test: will it pass?
+## test getStoredData
+
+> :question:Try to predict what will happen before running the test. Think
+> about what we've observed so far.
+
 
 ``` sh
 $ truffle test
@@ -389,20 +399,19 @@ Initial deployment
 ```
 </details>
 
-Woo! SimpleStorage now has:
+:tada: SimpleStorage has:
 
   - [x] a state, `storedData`. This is the location to store an integer value
   - [x] its `storedData` value at deployment be zero
   - [x] a function `getStoredData`, to retrieve the current `storedData` value.
   - [ ] a function `setStoredData`, to set the `storedData` value.
 
-> Something to ponder for later: we didn't initialze the state, yet its initial
+> :question:Something to ponder for later: we didn't initialze the state, yet its initial
 > value is zero. Why do you think that is?
-
 
 ## define setStoredData behavior
 
-There's only one bit of feature missing. Lets implement!
+There's one bit of feature missing. Lets implement!
   - [ ] a function `setStoredData`, to set the `storedData` value.
 
 Add the following describe block to our the test and run truffle test.
@@ -423,6 +432,8 @@ describe("Functionality", () => {
  });
 
 ```
+
+> :question:Try to predict the test outcome
 
 ``` sh
 $ truffle test
@@ -473,8 +484,8 @@ at process._tickCallback (internal/process/next_tick.js:68:7)
 This error indicates that we haven't included accounts in our test.
 
 > When truffle runs its tests it creates a local testnet and creates 10 funded
-accounts that smart contract developers can use for testing. This is part of
-the identity concept mentioned in the earlier part of the webinar.
+> accounts that smart contract developers can use for testing. This is part of
+> the identity concept mentioned in the earlier part of the webinar.
 
 
 Let's make sure we have accounts in our tests.  Uncomment `accounts` so test
@@ -573,5 +584,5 @@ Initial deployment
 ```
 </details>
 
-Congratulations! You did it! I hope this exercise was helpful and recommend you
+:tada: :sparkles: Congratulations! You did it! I hope this exercise was helpful and recommend you
 continue exploring.
