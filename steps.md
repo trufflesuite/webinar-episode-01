@@ -58,7 +58,7 @@ Compiling your contracts...
 > As we have not written any tests there's not much to report.
 
 
-# Introduce our features
+# SimpleStorage Behavior
 
 Our goal is to write a Smart Contract that stores a value that can be retrieve. To
 do this we need to have the following.
@@ -76,7 +76,7 @@ also increasing our knowledge and intuition of Truffle, Solidity and the
 ecosystem.
 
 
-## Behaviors
+## the contract test
 
 Let's create the truffle test-file for SimpleStorage, invoke truffle test, and
 examine the output.
@@ -138,7 +138,7 @@ introduced this contract to our project.
 > :exclamation: [Be sure to study the test code before proceeding](./test/simple_storage.js).
 
 
-## SimpleStorage Contract
+## the Contract subject
 
 Now that we've defined some behavior of the SimpleStorage contract we want to
 write.  Let's introduce it to our project and rerun the test.
@@ -199,7 +199,7 @@ logic and not have to wrestle with complicated testchain business.
 > :exclamation: Recall that Truffle scaffolded an initial migration script.
 > [Review it to see how it deploys a Contract](./migrations/1_initial_migration.js)
 
-## Migration SimpleStorage
+## the migration
 
 Truffle test will execute all the deployment scripts in lexical order. To
 deploy our SimpleStorage contract we will write a migration script.
@@ -252,7 +252,12 @@ Contratulations! If you see a similar output then you have:
   - [x] a way to define the behavior of `SimpleStorage`
   - [x] a way to validate its behavior is correct
 
-# Behavior: Our business logic
+> :exclamation: In other words, we've built a system to iterate, with focus, to
+> the Contract behavior we want. In the test file we describe the desired
+> contract behavior, implement said contract and test/observe/iterate to the
+> expected outcome.
+
+## business logic
 
 The SimpleStorage contract should have:
   - [ ] a state, `storedData`. This is the location to store an integer value
@@ -261,7 +266,7 @@ The SimpleStorage contract should have:
   - [ ] a function `setStoredData`, to set the `storedData` value.
 
 
-## define initial deployment value of storedData
+### define initial deployment value of storedData
 
 Add the following code to the test file and execute truffle test.
 
@@ -285,7 +290,7 @@ contract("SimpleStorage", (/* accounts */) => {
 
 ```
 
-## test: watch it fail
+#### test: watch it fail
 
 Since we defined a new behavior we expect the test to fail. Lets see how the
 system reports this expected failure.
@@ -349,7 +354,7 @@ a look at the file and try to deduce what's happening.
 > for SimpleStorage
 
 
-## implement getStoredData
+### implement getStoredData
 
 update SimpleStorage.sol to
   - declare a public uint256 named storedData
@@ -366,7 +371,7 @@ contract SimpleStorage {
 }
 ```
 
-## test getStoredData
+#### test: getStoredData
 
 > :question:Try to predict what will happen before running the test. Think
 > about what we've observed so far.
@@ -409,7 +414,7 @@ Initial deployment
 > :question:Something to ponder for later: we didn't initialze the state, yet its initial
 > value is zero. Why do you think that is?
 
-## define setStoredData behavior
+### define setStoredData behavior
 
 There's one bit of feature missing. Lets implement!
   - [ ] a function `setStoredData`, to set the `storedData` value.
@@ -536,7 +541,7 @@ at process._tickCallback (internal/process/next_tick.js:68:7)
 
 </details>
 
-## implement setStoredData
+#### implement setStoredData
 
 The following line in the output indicates that `setStoredData` is not a
 function. We should fix that.
@@ -586,3 +591,15 @@ Initial deployment
 
 :tada: :sparkles: Congratulations! You did it! I hope this exercise was helpful and recommend you
 continue exploring.
+
+# conclusion
+
+todo
+  - [ ] What did we do
+  - [ ] Why truffle
+    - [ ] a framework for doing and learning
+    - [ ] less hex more text
+    - [ ] sharable
+    - [ ] measurable
+
+
