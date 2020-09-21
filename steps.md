@@ -66,8 +66,8 @@ do this we need to have the following.
   - [ ] some way to define the behavior of `SimpleStorage`
   - [ ] the ability to verify `SimpleStorage` behaves the way we defined
 
-We will use aspects of Behavior driven development(BDD), and Test driven
-development (TDD) methodologies to work through this tutorial. We will define
+We will use aspects of [Behavior driven development (BDD)](https://en.wikipedia.org/wiki/Behavior-driven_development), and [Test driven
+development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development) methodologies to work through this tutorial. We will define
 new behavior in truffle test files and implement contract logic to achieve that
 behavior.
 
@@ -141,9 +141,9 @@ introduced this contract to our project.
 ## the Contract subject
 
 Now that we've defined some behavior of the SimpleStorage contract we want to
-write.  Let's introduce it to our project and rerun the test.
+write, let's introduce it to our project and rerun the test.
 
-> `truffle create contract <ContractName>` is a quick way to scaffold a project!
+> `truffle create contract <ContractName>` is a quick way to scaffold a smart contract!
 
 ``` sh
 $ truffle create contract SimpleStorage
@@ -201,14 +201,14 @@ logic and not have to wrestle with complicated testchain business.
 
 ## the migration
 
-Truffle test will execute all the deployment scripts in lexical order. To
+Truffle test will execute all the deployment scripts in [lexical order](https://en.wikipedia.org/wiki/Lexicographic_order#:~:text=In%20mathematics%2C%20the%20lexicographic%20or,order%20of%20their%20component%20letters.). To
 deploy our SimpleStorage contract we will write a migration script.
 
-> a deployment script is the place to define a Smart Contract's deployment
+> a migration script is the place to define a Smart Contract's deployment
 > logic. These scripts are processed in lexical order which explains their odd
 > filenames.
 
-Create the the SimpleStorage deployment `migrations/2_deploy_simple_storage.js`
+Create the SimpleStorage deployment `migrations/2_deploy_simple_storage.js`
 and then execute another test
 
 ``` Solidity
@@ -247,7 +247,7 @@ Contract: SimpleStorage
 ```
 </details>
 
-Contratulations! If you see a similar output then you have:
+Congratulations! If you see a similar output then you have:
   - [x] a smart contract, `SimpleStorage`
   - [x] a way to define the behavior of `SimpleStorage`
   - [x] a way to validate its behavior is correct
@@ -346,7 +346,7 @@ a look at the file and try to deduce what's happening.
       at Context.it (test/simple_storage.js:14:57)
 ```
 
-> :exclamation: This type of error will be a common occurence and it's good to
+> :exclamation: This type of error will be a common occurrence and it's good to
 > start building our intuition about them.
 >
 > In the test file we ask truffle for SimpleStorage's deployed instance and
@@ -411,15 +411,15 @@ Initial deployment
   - [x] a function `getStoredData`, to retrieve the current `storedData` value.
   - [ ] a function `setStoredData`, to set the `storedData` value.
 
-> :question:Something to ponder for later: we didn't initialze the state, yet its initial
-> value is zero. Why do you think that is?
+> :question:Something to ponder for later: we didn't initialize the state, yet its initial
+> value is zero. Why do you think that is? If you can't figure out yourself, read this [section](https://solidity.readthedocs.io/en/v0.7.0/control-structures.html#scoping-and-declarations) from the Solidity documentation.
 
 ### define setStoredData behavior
 
 There's one bit of feature missing. Lets implement!
   - [ ] a function `setStoredData`, to set the `storedData` value.
 
-Add the following describe block to our the test and run truffle test.
+Add the following `describe` block to our test and run truffle test.
 
 ``` javascript
 describe("Functionality", () => {
