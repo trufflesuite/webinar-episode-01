@@ -1,3 +1,23 @@
+# Truffle BDD/TDD walkthrough
+
+Live coding walkthrough for [Episode 1: Explore the full lifecycle of developing a Dapp (Truffle Webinar Series)](https://www.crowdcast.io/e/truffle-webinar-series--)
+
+- [Project initialization](#project-initialization)
+- [SimpleStorage Behavior](#simplestorage-behavior)
+  * [the contract test](#the-contract-test)
+  * [the Contract subject](#the-contract-subject)
+  * [the migration](#the-migration)
+  * [business logic](#business-logic)
+    + [define initial deployment value of storedData](#define-initial-deployment-value-of-storeddata)
+      - [test: watch it fail](#test--watch-it-fail)
+    + [implement getStoredData](#implement-getstoreddata)
+      - [test: getStoredData](#test--getstoreddata)
+    + [define setStoredData behavior](#define-setstoreddata-behavior)
+      - [implement setStoredData](#implement-setstoreddata)
+- [Conclusion](#conclusion)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 # Project initialization
 
   - [ ] First [install Truffle. See documentation here](https://www.trufflesuite.com/docs/truffle/getting-started/installation)
