@@ -53,7 +53,7 @@ Compiling your contracts...
 
 </details>
 
-> :exclamation: There's not much to report because we have not yet written any tests.
+> :information_desk_person: There's not much to report because we have not yet written any tests.
 
 
 # SimpleStorage Behavior
