@@ -37,5 +37,14 @@ contract("SimpleStorage", function (accounts) {
       const owner = await ssInstance.owner.call();
       assert.equal(owner, accounts[1], "owner should be the deploying address");
     });
+
+    describe("Counter", () => {
+      it("user should default to 0", async () => {
+        const ssInstance = await SimpleStorage.deployed();
+        const count = await ssInstance.getCount(accounts[0]);
+        assert.equal( count, 0);
+      });
+
+    });
   });
 });
