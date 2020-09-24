@@ -1,7 +1,5 @@
 # Truffle BDD/TDD walkthrough
 
-Live coding walkthrough for [Episode 1: Explore the full lifecycle of developing a Dapp (Truffle Webinar Series)](https://www.crowdcast.io/e/truffle-webinar-series--)
-
 - [Project initialization](#project-initialization)
 - [SimpleStorage Behavior](#simplestorage-behavior)
   * [the contract test](#the-contract-test)

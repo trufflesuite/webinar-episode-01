@@ -1,31 +1,11 @@
-# Initialize a truffle project
+# Explore the full lifecycle of developing a Dapp
+Kevin Bluer and Amal Sudama, walk you through the 101s of developing a Dapp,
+highlighting popular Ethereum development tooling used, as well as
+demonstrating the power of the Truffle Suite.
 
-create new directory and navigate to it with your console
+![Img 1](https://trufflesuite.com/img/events/webinar-livestream2.jpg)
 
-```
-$ mkdir web-01 && cd $_
-$ truffle init
-```
 
-# Starter things
-
-Truffle init scaffolds a starter project for you.
-  - contracts/Migrations.sol
-    * Migrations contract used by truffle to determine what assets have to be
-      migrated
-
-  - migrations/1_initial_migration.js
-    * The initial migration SCRIPT which deploys compilation assets for the
-      Migrations.sol contract.
-
-  - truffle-config.js
-    * centralized location to customize the behavior of your truffle project.
-      solidity version, different networks (chains), the structure/layout of your
-      build assets.
-
-# Next
-
-  - Lets write a contract that stores a value.
-    * How do we know this happened?
-    * What is the cycle?
-    * What does Truffle suite of tools provide?
+## Resources
+  * [Video archive](https://www.crowdcast.io/e/truffle-webinar-series--). Note you will have to register with crowdcast to see the video
+  * [Live code transcript](./steps.md)
