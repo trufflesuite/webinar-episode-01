@@ -1,6 +1,7 @@
 const SimpleStorage = artifacts.require("SimpleStorage");
 
 contract("SimpleStorage", function (accounts) {
+
   describe("Initial deployment", async () => {
     it("should assert true", async function () {
       await SimpleStorage.deployed();
@@ -15,6 +16,7 @@ contract("SimpleStorage", function (accounts) {
       assert.equal(storedData, 0, `Initial state should be zero`);
     });
   });
+
   describe("Functionality", () => {
     it("should store the value 42", async () => {
       // get subject
@@ -26,6 +28,14 @@ contract("SimpleStorage", function (accounts) {
       // verify we changed the subject
       const storedData = await ssInstance.getStoredData.call();
       assert.equal(storedData, 42, `${storedData} was not stored!`);
+    });
+  });
+
+  describe("Exercises", () => {
+    it("should have an owner", async () => {
+      const ssInstance = await SimpleStorage.deployed();
+      const owner = await ssInstance.owner.call();
+      assert.equal(owner, accounts[0], "owner should be the deploying address");
     });
   });
 });
