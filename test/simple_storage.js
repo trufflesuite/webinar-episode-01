@@ -42,7 +42,23 @@ contract("SimpleStorage", function (accounts) {
       it("user should default to 0", async () => {
         const ssInstance = await SimpleStorage.deployed();
         const count = await ssInstance.getCount(accounts[0]);
-        assert.equal( count, 0);
+        assert.equal(count, 0);
+      });
+
+      it("tracks user correctly", async () => {
+        const ssInstance = await SimpleStorage.deployed();
+
+        await ssInstance.setStoredData(123, { from: accounts[3]});
+        let count = await ssInstance.getCount(accounts[3]);
+        assert.equal(count, 1);
+
+        await ssInstance.setStoredData(122, { from: accounts[3]});
+        count = await ssInstance.getCount(accounts[3]);
+        assert.equal(count, 2);
+
+        await ssInstance.setStoredData(112, { from: accounts[3]});
+        count = await ssInstance.getCount(accounts[3]);
+        assert.equal(count, 3);
       });
 
     });
