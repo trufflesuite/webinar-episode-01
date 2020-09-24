@@ -35,7 +35,7 @@ contract("SimpleStorage", function (accounts) {
     it("should have an owner", async () => {
       const ssInstance = await SimpleStorage.deployed();
       const owner = await ssInstance.owner.call();
-      assert.equal(owner, accounts[0], "owner should be the deploying address");
+      assert.equal(owner, accounts[1], "owner should be the deploying address");
     });
   });
 });
