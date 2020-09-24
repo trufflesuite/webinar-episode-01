@@ -16,5 +16,6 @@ contract SimpleStorage {
 
     function setStoredData(uint256 x) public {
         storedData = x;
+        counter[msg.sender] += 1;
     }
 }
