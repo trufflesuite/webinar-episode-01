@@ -2,6 +2,12 @@ const SimpleStorage = artifacts.require("SimpleStorage");
 
 contract("SimpleStorage", function (accounts) {
 
+  // SimpleStorage is deployed once per contract block
+  let ssInstance;
+  beforeEach( async () => {
+    ssInstance = await SimpleStorage.deployed();
+  });
+
   describe("Initial deployment", async () => {
     it("should assert true", async function () {
       await SimpleStorage.deployed();
@@ -9,8 +15,6 @@ contract("SimpleStorage", function (accounts) {
     });
 
     it("was deployed and it's intial value is 0", async () => {
-      // get subject
-      const ssInstance = await SimpleStorage.deployed();
       // verify it starts with zero
       const storedData = await ssInstance.getStoredData.call();
       assert.equal(storedData, 0, `Initial state should be zero`);
@@ -19,9 +23,6 @@ contract("SimpleStorage", function (accounts) {
 
   describe("Functionality", () => {
     it("should store the value 42", async () => {
-      // get subject
-      const ssInstance = await SimpleStorage.deployed();
-
       // change the subject
       await ssInstance.setStoredData(42, { from: accounts[0] });
 
@@ -33,21 +34,18 @@ contract("SimpleStorage", function (accounts) {
 
   describe("Exercises", () => {
     it("should have an owner", async () => {
-      const ssInstance = await SimpleStorage.deployed();
       const owner = await ssInstance.owner.call();
       assert.equal(owner, accounts[1], "owner should be the deploying address");
     });
 
     describe("Counter", () => {
+
       it("user should default to 0", async () => {
-        const ssInstance = await SimpleStorage.deployed();
-        const count = await ssInstance.getCount(accounts[0]);
+        const count = await ssInstance.getCount(accounts[9]);
         assert.equal(count, 0);
       });
 
       it("tracks user correctly", async () => {
-        const ssInstance = await SimpleStorage.deployed();
-
         await ssInstance.setStoredData(123, { from: accounts[3]});
         let count = await ssInstance.getCount(accounts[3]);
         assert.equal(count, 1);
