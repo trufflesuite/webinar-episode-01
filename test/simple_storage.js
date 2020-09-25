@@ -1,6 +1,15 @@
 const SimpleStorage = artifacts.require("SimpleStorage");
+const {reverts} = require('truffle-assertions');
 
 contract("SimpleStorage", function (accounts) {
+
+  let ssInstance;
+  const [owner, user] = accounts;
+
+  beforeEach( async () => {
+    ssInstance = await SimpleStorage.new({from: owner});
+  });
+
   describe("Initial deployment", async () => {
     it("should assert true", async function () {
       await SimpleStorage.deployed();
@@ -8,24 +17,57 @@ contract("SimpleStorage", function (accounts) {
     });
 
     it("was deployed and it's intial value is 0", async () => {
-      // get subject
-      const ssInstance = await SimpleStorage.deployed();
       // verify it starts with zero
       const storedData = await ssInstance.getStoredData.call();
       assert.equal(storedData, 0, `Initial state should be zero`);
     });
   });
+
   describe("Functionality", () => {
     it("should store the value 42", async () => {
-      // get subject
-      const ssInstance = await SimpleStorage.deployed();
-
       // change the subject
-      await ssInstance.setStoredData(42, { from: accounts[0] });
+      await ssInstance.setStoredData(42, { from: user});
 
       // verify we changed the subject
       const storedData = await ssInstance.getStoredData.call();
       assert.equal(storedData, 42, `${storedData} was not stored!`);
+    });
+  });
+
+  describe("Exercises", () => {
+    it("should have an owner", async () => {
+      const contractOwner = await ssInstance.owner.call();
+      assert.equal(contractOwner, owner, "owner should be the deploying address");
+    });
+
+    describe("Counter", () => {
+
+      it("user should default to 0", async () => {
+        const count = await ssInstance.getCount(user);
+        assert.equal(count, 0);
+      });
+
+      it("non owners not allowed", async() => {
+        await reverts(
+          ssInstance.getCount(user, {from: user}),
+          "restricted to owner"
+        );
+      });
+
+      it("tracks user correctly", async () => {
+        await ssInstance.setStoredData(123, {from: user});
+        let count = await ssInstance.getCount(user);
+        assert.equal(count, 1);
+
+        await ssInstance.setStoredData(122, {from: user});
+        count = await ssInstance.getCount(user);
+        assert.equal(count, 2);
+
+        await ssInstance.setStoredData(112, {from: user});
+        count = await ssInstance.getCount(user);
+        assert.equal(count, 3);
+      });
+
     });
   });
 });
