@@ -8,9 +8,9 @@ This document is the accompanying notes for [Episode
 ## Resources
 
   - [Transcript](./steps.md) of the live code session.
-  
+
 ## Code challenge
-  
+
 Implement the following new behavior in the contract following TDD:
 
    - The contract should have the concept of an owner. **Note** that truffle uses the first account to sign deployments.
@@ -22,3 +22,7 @@ Implement the following new behavior in the contract following TDD:
      - a function `getCount(address _address)` that returns the count associated with `_address`
      - a [modifier](https://solidity.readthedocs.io/en/v0.7.1/structure-of-a-contract.html#function-modifiers) to guard that only the owner can call `getCount` which should [revert](https://solidity.readthedocs.io/en/v0.7.1/control-structures.html#revert) when invoked with the wrong caller.
      - This [Truffle Assertion plugin](https://github.com/rkalis/truffle-assertions) which helps test for revert.
+
+## Contributors
+
+A heartfelt thanks to [Angela](https://twitter.com/1starinmymind) and [Francis](https://github.com/fodisi) for their reviews, feedback and testing. :bow:
