@@ -6,11 +6,16 @@ contract SimpleStorage {
     address public owner = msg.sender;
     mapping(address => uint) public counter;
 
+    modifier onlyOwner () {
+      require(msg.sender == owner, "restricted to owner");
+      _;
+    }
+
     function getStoredData() public view returns (uint256) {
         return storedData;
     }
 
-    function getCount(address _address) public view returns (uint) {
+    function getCount(address _address) public view onlyOwner returns (uint) {
         return counter[_address];
     }
 
