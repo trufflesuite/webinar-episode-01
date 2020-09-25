@@ -1,7 +1,7 @@
 # Explore the full lifecycle of developing a Dapp
 
 This document is the accompanying notes for [Episode
-1](https://www.crowdcast.io/e/truffle-webinar-series--) of our webinar series.
+1](https://trfl.co/truffle-webinar-series1) of our webinar series.
 
 ![Img 1](https://trufflesuite.com/img/events/webinar-livestream2.jpg)
 
