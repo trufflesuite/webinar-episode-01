@@ -25,4 +25,4 @@ Implement the following new behavior in the contract following TDD:
 
 ## Contributors
 
-A heartfelt thanks to [Angela](https://twitter.com/1starinmymind) and [Francis](https://github.com/fodisi) for their reviews, feedback and testing. :bow:
+A heartfelt thanks to [Angela](https://twitter.com/astarinmymind_) and [Francis](https://github.com/fodisi) for their reviews, feedback and testing. :bow:
