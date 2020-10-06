@@ -93,18 +93,19 @@ increasing our knowledge and intuition of Truffle, Solidity and the ecosystem.
 
 ## the contract test
 
-Let's create the truffle test-file for SimpleStorage, invoke truffle test, and
-examine the output.
+We need to define the behavior of our contract. Let's create our SimpleStorage
+test-file, invoke test, and examine its output.  We will use the `truffle
+create test` command to scaffold a truffle test.
 
-> `truffle create test <ContractName>` scaffolds a truffle test!  This
-> is where we define the behavior of a contract.
+``` sh
 
+$ truffle create test SimpleStorage
+$ truffle test
+```
 <details>
 <summary>See output</summary>
 
 ``` sh
-$ truffle create test SimpleStorage
-$ truffle test
 
 Compiling your contracts...
 ===========================
@@ -153,11 +154,10 @@ introduced this contract to our project.
 
 ## the Contract subject
 
-Now that we've defined the SimpleStorage behavior, let's add the contract to
-our project and rerun the test.
-
-> `truffle create contract <ContractName>` adds an empty contract to our
-> project! This is where we will implement our desired contract behavior.
+Now that we've defined the SimpleStorage behavior, let's introduce the contract
+to our project and rerun the test.  The command `truffle create contract` adds
+an empty contract to our project! This is where we will implement our desired
+contract behavior.
 
 ``` sh
 $ truffle create contract SimpleStorage
@@ -195,14 +195,13 @@ at process._fatalException (internal/bootstrap/node.js:497:27)
 
 </details>
 
-> :warning: :information_desk_person: This error is informative. It tells us that `SimpleStorage` has not been
-deployed to a network.
+> :warning: :information_desk_person: This error tells us `SimpleStorage` has
+> not been deployed to a network.
 
-The insights and feedback from tests can increase our knowledge and increase
-confidence in our Smart Contract evolution. As contract developers we
-want to focus on implementing our contract logic and not have to wrestle with
-complicated testchain business.  Here's what `truffle test` does at a high
-level to facilitate that focus:
+Insights from test errors increases our knowledge and confidence in our Smart
+Contract evolution and lets us focus on implementing contract logic without
+wrestling with complicated testchain business.  Here's what `truffle test` does
+at a high level to facilitate that focus:
   - starts a local test chain
   - compiles all contracts it knows about
   - deploys those contracts
