@@ -1,5 +1,5 @@
 const SimpleStorage = artifacts.require("SimpleStorage");
-const {reverts} = require('truffle-assertions');
+const TruffleAssert = require('truffle-assertions');
 
 contract("SimpleStorage", function (accounts) {
 
@@ -32,6 +32,16 @@ contract("SimpleStorage", function (accounts) {
       const storedData = await ssInstance.getStoredData.call();
       assert.equal(storedData, 42, `${storedData} was not stored!`);
     });
+
+    it("should emit an event when setting a value", async () => {
+      const expectedNumber = 420;
+      const tx = await ssInstance.setStoredData(expectedNumber, { from: user});
+
+      TruffleAssert.eventEmitted(tx, 'SSValueStored', (event) => {
+        return event.setter === user &&
+               event.value.toString() === '' + expectedNumber;  // value is a BN
+      });
+    });
   });
 
   describe("Exercises", () => {
@@ -48,7 +58,7 @@ contract("SimpleStorage", function (accounts) {
       });
 
       it("non owners not allowed", async() => {
-        await reverts(
+        await TruffleAssert.reverts(
           ssInstance.getCount(user, {from: user}),
           "restricted to owner"
         );
