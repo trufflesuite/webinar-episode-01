@@ -6,6 +6,8 @@ contract SimpleStorage {
     address public owner = msg.sender;
     mapping(address => uint) public counter;
 
+    event SSValueStored(address setter, uint256 value);
+
     modifier onlyOwner () {
       require(msg.sender == owner, "restricted to owner");
       _;
@@ -22,5 +24,6 @@ contract SimpleStorage {
     function setStoredData(uint256 x) public {
         storedData = x;
         counter[msg.sender] += 1;
+        emit SSValueStored(msg.sender, x);
     }
 }
