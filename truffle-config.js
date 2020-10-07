@@ -42,12 +42,12 @@ module.exports = {
      network_id: "*",       // Any network (default: none)
     },
     teams: {
-      url: `ws://marshmallow:8002/...`,
+      url: `ws://marshmallow:8002/b0afbcd9-a9ed-4c8e-92ed-5a2ea036e94d`,
       network_id: "*",
       gas: 5500000
     },
     production: {
-      url: `https://sandbox.truffleteams.com/...`,
+      url: `https://sandbox.truffleteams.com/dd99da65-6190-4d8b-93f9-4a19e6cc0a78`,
       network_id: "*",
       gas: 5500000
     }
