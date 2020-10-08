@@ -48,7 +48,7 @@ module.exports = {
      network_id: "*",       // Any network (default: none)
     },
     teams: {
-      url: `ws://marshmallow:8002/d3ecbb2a-09e9-466f-bad2-a1a7a46b2080`,
+      url: `ws://marshmallow:8002/492c1d0e-9633-4e12-b11c-2cfc0d3d1a7f`,
       network_id: "*",
       gas: 5500000
     }
