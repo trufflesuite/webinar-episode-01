@@ -24,6 +24,6 @@ contract SimpleStorage {
     function setStoredData(uint256 x) public {
         storedData = x;
         counter[msg.sender] += 1;
-        emit SSValueStored(msg.sender, x);
+        // emit SSValueStored(msg.sender, x);
     }
 }
