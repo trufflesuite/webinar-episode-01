@@ -33,15 +33,15 @@ contract("SimpleStorage", function (accounts) {
       assert.equal(storedData, 42, `${storedData} was not stored!`);
     });
 
-    it("should emit an event when setting a value", async () => {
-      const expectedNumber = 420;
-      const tx = await ssInstance.setStoredData(expectedNumber, { from: user});
+    // it("should emit an event when setting a value", async () => {
+    //   const expectedNumber = 420;
+    //   const tx = await ssInstance.setStoredData(expectedNumber, { from: user});
 
-      TruffleAssert.eventEmitted(tx, 'SSValueStored', (event) => {
-        return event.setter === user &&
-               event.value.toString() === '' + expectedNumber;  // value is a BN
-      });
-    });
+    //   TruffleAssert.eventEmitted(tx, 'SSValueStored', (event) => {
+    //     return event.setter === user &&
+    //            event.value.toString() === '' + expectedNumber;  // value is a BN
+    //   });
+    // });
   });
 
   describe("Exercises", () => {
