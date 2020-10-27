@@ -47,8 +47,16 @@ module.exports = {
      port: 7545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
     },
-    teams: {
-      url: `ws://marshmallow:8002/492c1d0e-9633-4e12-b11c-2cfc0d3d1a7f`,
+    kevinRemote: {
+
+      //url: `ws://marshmallow:8002/492c1d0e-9633-4e12-b11c-2cfc0d3d1a7f`,
+      // resolve marshmallow ip in URL instead of modifying /etc/hosts
+      url: `ws://52.173.138.74:8002/492c1d0e-9633-4e12-b11c-2cfc0d3d1a7f`,
+      network_id: "*",
+      gas: 5500000
+    },
+    teamsProduction: {
+      url: `https://sandbox.truffleteams.com/eee1b0a7-b85f-405e-a004-770f6f9ad430`,
       network_id: "*",
       gas: 5500000
     }
