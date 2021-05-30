@@ -270,7 +270,7 @@ Contract: SimpleStorage
 ## business logic
 
 Lets focus on the business logic of our smart contract now that we have the
-test, contract and migration pices in place
+test, contract and migration pieces in place
 
 Our SimpleStorage contract should have:
   - [ ] a state, `storedData`. This is the location to store an integer value
