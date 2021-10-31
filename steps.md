@@ -1,17 +1,19 @@
 # Truffle BDD/TDD walkthrough
 
+- [Truffle BDD/TDD walkthrough](#truffle-bddtdd-walkthrough)
 - [Project initialization](#project-initialization)
 - [SimpleStorage Behavior](#simplestorage-behavior)
-  * [the contract test](#the-contract-test)
-  * [the Contract subject](#the-contract-subject)
-  * [the migration](#the-migration)
-  * [business logic](#business-logic)
-    + [define initial deployment value of storedData](#define-initial-deployment-value-of-storeddata)
-      - [test: watch it fail](#test--watch-it-fail)
-    + [implement getStoredData](#implement-getstoreddata)
-      - [test: getStoredData](#test--getstoreddata)
-    + [define setStoredData behavior](#define-setstoreddata-behavior)
+  - [the contract test](#the-contract-test)
+  - [the Contract subject](#the-contract-subject)
+  - [the migration](#the-migration)
+  - [business logic](#business-logic)
+    - [define initial deployment value of storedData](#define-initial-deployment-value-of-storeddata)
+      - [test: watch it fail](#test-watch-it-fail)
+    - [implement getStoredData](#implement-getstoreddata)
+      - [test: getStoredData](#test-getstoreddata)
+    - [define setStoredData behavior](#define-setstoreddata-behavior)
       - [implement setStoredData](#implement-setstoreddata)
+      - [implement constructor and a way to ensure only the owner is able to execute setStoredData](#implement-constructor-and-a-way-to-ensure-only-the-owner-is-able-to-execute-setstoreddata)
 - [Conclusion](#conclusion)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
@@ -277,6 +279,9 @@ Our SimpleStorage contract should have:
   - [ ] its `storedData` value at deployment be zero
   - [ ] a function `getStoredData`, to retrieve the current `storedData` value.
   - [ ] a function `setStoredData`, to set the `storedData` value.
+  - [ ] a constructor to set the initial value of `storedData`.
+  - [ ] a contract `owner`.
+  - [ ] a way to ensure only the contract `owner` is able to call the `setStoredData` function.
 
 
 ### define initial deployment value of storedData
@@ -423,7 +428,7 @@ Initial deployment
 
 ### define setStoredData behavior
 
-There's one bit of feature missing. Lets implement!
+Lets implement the next part!
   - [ ] a function `setStoredData`, to set the `storedData` value.
 
 Add the following `describe` block to our test and run truffle test.
@@ -596,6 +601,140 @@ Initial deployment
 3 passing (125ms)
 ```
 </details>
+
+#### implement constructor and a way to ensure only the owner is able to execute setStoredData
+
+Add the following `it` block to the Functionality `describe` block test and run truffle test.
+
+``` javascript
+it("should not let someone else change the variable", async () => {
+  const [ owner, badBob ] = accounts;
+  const ssInstance = await SimpleStorage.new(42, { from: owner });
+  
+  const balance = await web3.eth.getBalance(owner);
+  console.log(balance);
+  
+  try {
+    await ssInstance.setStoredData(22, { from: badBob });
+  } catch(err) { }
+  
+  const storedData = await ssInstance.getStoredData.call();
+  assert.equal(storedData, 42, "storedData was not changed!"); 
+});
+
+```
+
+> :question: Try to predict the test outcome.
+
+``` sh
+$ truffle test
+```
+
+<details> <summary>see output</summary>
+
+``` sh
+$ truffle test
+
+Compiling your contracts...
+===========================
+> Compiling ./contracts/Migrations.sol
+> Compiling ./contracts/SimpleStorage.sol
+> Artifacts written to /tmp/test--42579-z0xosuySymKs
+> Compiled successfully using:
+- solc: 0.5.16+commit.9c3226ce.Emscripten.clang
+
+
+
+Contract: SimpleStorage
+Initial deployment
+✓ should assert true
+✓ was deployed and it's intial value is 0
+Functionality
+✓ should store the value 42
+1) should not let someone else change the variable
+> No events were emitted
+
+
+3 passing (82ms)
+  1 failing
+
+  1) Contract: SimpleStorage
+  Functionality
+  should not let someone else change the variable:
+  Error: Invalid number of parameters for "undefined". Got 2 expected 0!
+  at Context.<anonymous> (test/simple_storage.js:33:49)
+at processImmediate (internal/timers.js:461:21)
+```
+
+</details>
+
+
+> :information_desk_person: `Error: Invalid number of parameters for "undefined". 
+> Got 2 expected 0!`
+> This error indicates that we haven't included a constructor parameter and set
+> the contract owner.
+
+Add the following variable to the SimpleStorage contract
+
+``` solidity
+address owner = msg.sender;
+```
+
+Add the following constructor to the SimpleStorage contract
+
+``` solidity
+constructor(uint256 _num) public {
+    storedData = _num;
+}
+```
+
+Add the following require statement to the top of the setStoredData function in SimpleStorage contract
+
+``` solidity
+require(msg.sender == owner, "Not the owner!");
+```
+
+Initialize the storedData value to 0 by adding a parameter in 2_deploy_simple_storage.js
+
+``` solidity
+module.exports = function(deployer) {
+  deployer.deploy(SimpleStorage, 0);
+}
+```
+
+Lets run truffle test once again
+
+``` sh
+$ truffle test
+```
+
+<details><summary>see results</summary>
+
+``` sh
+Compiling your contracts...
+===========================
+> Compiling ./contracts/Migrations.sol
+> Compiling ./contracts/SimpleStorage.sol
+> Artifacts written to /tmp/test--44360-9r4fMMWnmb6y
+> Compiled successfully using:
+- solc: 0.5.16+commit.9c3226ce.Emscripten.clang
+
+
+
+Contract: SimpleStorage
+Initial deployment
+✓ should assert true
+✓ was deployed and it's intial value is 0
+  Functionality
+✓ should store the value 42 (55ms)
+99986593140000000000
+✓ should not let someone else change the variable
+
+
+4 passing (125ms)
+```
+</details>
+
 
 :tada: :sparkles: Congratulations! You did it! I hope this exercise was helpful and recommend you
 continue exploring.
