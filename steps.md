@@ -339,7 +339,7 @@ Compiling your contracts...
   Contract: SimpleStorage
     Initial deployment
       ✓ should assert true
-      1) was deployed and it's intial value is 0
+      1) was deployed and its intial value is 12
     > No events were emitted
 
 
@@ -348,7 +348,7 @@ Compiling your contracts...
 
   1) Contract: SimpleStorage
        Initial deployment
-         was deployed and it's intial value is 0:
+         was deployed and its intial value is 12:
      TypeError: Cannot read property 'call' of undefined
       at Context.it (test/simple_storage.js:14:57)
       at process._tickCallback (internal/process/next_tick.js:68:7)
@@ -409,7 +409,7 @@ Compiling your contracts...
 Contract: SimpleStorage
 Initial deployment
 ✓ should assert true
-✓ was deployed and it's intial value is 0
+✓ was deployed and its intial value is 12
 
 
 2 passing (63ms)
@@ -532,7 +532,7 @@ Compiling your contracts...
 Contract: SimpleStorage
 Initial deployment
 ✓ should assert true
-✓ was deployed and it's intial value is 0
+✓ was deployed and its intial value is 12
 Functionality
 1) should store the value 42
 > No events were emitted
@@ -592,7 +592,7 @@ Compiling your contracts...
 Contract: SimpleStorage
 Initial deployment
 ✓ should assert true
-✓ was deployed and it's intial value is 0
+✓ was deployed and its intial value is 12
   Functionality
 ✓ should store the value 42 (55ms)
 
