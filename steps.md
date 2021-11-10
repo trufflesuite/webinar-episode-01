@@ -276,7 +276,7 @@ test, contract and migration pieces in place
 
 Our SimpleStorage contract should have:
   - [ ] a state, `storedData`. This is the location to store an integer value
-  - [ ] its `storedData` value at deployment be zero
+  - [ ] its `storedData` value at deployment be 12
   - [ ] a function `getStoredData`, to retrieve the current `storedData` value.
   - [ ] a function `setStoredData`, to set the `storedData` value.
   - [ ] a constructor to set the initial value of `storedData`.
@@ -296,12 +296,12 @@ contract("SimpleStorage", (/* accounts */) => {
       assert.isTrue(true);
     });
 
-    it("was deployed and it's intial value is 0", async () => {
+    it("was deployed and its intial value is 12", async () => {
       // get subject
       const ssInstance = await SimpleStorage.deployed();
-      // verify it starts with zero
+      // verify it starts with 12
       const storedData = await ssInstance.getStoredData.call();
-      assert.equal(storedData, 0, `Initial state should be zero`);
+      assert.equal(storedData, 12, `Initial state should be 12`);
     });
   });
 });
@@ -419,12 +419,11 @@ Initial deployment
 :tada: SimpleStorage has:
 
   - [x] a state, `storedData`. This is the location to store an integer value
-  - [x] its `storedData` value at deployment be zero
+  - [x] its `storedData` value at deployment be 12
   - [x] a function `getStoredData`, to retrieve the current `storedData` value.
   - [ ] a function `setStoredData`, to set the `storedData` value.
 
-> :question:Something to ponder for later: we didn't initialize the state, yet its initial
-> value is zero. Why do you think that is? If you can't figure out yourself, read this [section](https://solidity.readthedocs.io/en/v0.7.0/control-structures.html#scoping-and-declarations) from the Solidity documentation.
+> :information_desk_person: Please note, we have declared and initialized the storedData variable, but solidity has rules for default values for unintialized variables. See [section](https://solidity.readthedocs.io/en/v0.7.0/control-structures.html#scoping-and-declarations) from the Solidity documentation.
 
 ### define setStoredData behavior
 
@@ -474,7 +473,7 @@ Compiling your contracts...
 Contract: SimpleStorage
 Initial deployment
 ✓ should assert true
-✓ was deployed and it's intial value is 0
+✓ was deployed and its intial value is 12
 Functionality
 1) should store the value 42
 > No events were emitted
@@ -674,7 +673,7 @@ at processImmediate (internal/timers.js:461:21)
 > This error indicates that we haven't included a constructor parameter and set
 > the contract owner.
 
-Add the following variable to the SimpleStorage contract
+Add and initialize the following state variable to the SimpleStorage contract
 
 ``` solidity
 address owner = msg.sender;
@@ -694,11 +693,12 @@ Add the following require statement to the top of the setStoredData function in 
 require(msg.sender == owner, "Not the owner!");
 ```
 
-Initialize the storedData value to 0 by adding a parameter in 2_deploy_simple_storage.js
+Initialize the storedData value to 12 by adding a parameter in 2_deploy_simple_storage.js
 
 ``` solidity
 module.exports = function(deployer) {
-  deployer.deploy(SimpleStorage, 0);
+  /* invoke SimpleStorage's constructor, and pass 12 as its first argument */
+  deployer.deploy(SimpleStorage, 12);
 }
 ```
 
@@ -724,10 +724,9 @@ Compiling your contracts...
 Contract: SimpleStorage
 Initial deployment
 ✓ should assert true
-✓ was deployed and it's intial value is 0
+✓ was deployed and its intial value is 12
   Functionality
 ✓ should store the value 42 (55ms)
-99986593140000000000
 ✓ should not let someone else change the variable
 
 
