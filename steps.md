@@ -610,8 +610,16 @@ it("should not let someone else change the variable", async () => {
   const [ owner, badBob ] = accounts;
   const ssInstance = await SimpleStorage.new(42, { from: owner });
   
-  const balance = await web3.eth.getBalance(owner);
-  console.log(balance);
+  /*
+   *
+   * @comment: if you wanted to interact with web3, here is an 
+   * example of checking the balance of an account and outputting
+   * the result to the test console       
+   *
+   * const balance = await web3.eth.getBalance(owner);
+   * console.log(balance);
+   *
+   */
   
   try {
     await ssInstance.setStoredData(22, { from: badBob });
@@ -647,7 +655,7 @@ Compiling your contracts...
 Contract: SimpleStorage
 Initial deployment
 ✓ should assert true
-✓ was deployed and it's intial value is 0
+✓ was deployed and its intial value is 12
 Functionality
 ✓ should store the value 42
 1) should not let someone else change the variable
